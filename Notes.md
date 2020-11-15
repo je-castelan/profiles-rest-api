@@ -119,3 +119,75 @@ You can check the model [here](profiles_api/admin.py).
 On APP we need to have `admin` class imported from `django.contrib` and import the model class.
 
 We assign a admin manager with `admin.site.register(path.class)`
+
+# API Views
+
+## Introduction
+
+Django REST Frameworks offers the following 2 kind of classes
+
+ - APIView
+ - ViewSet
+
+In this case, we will work with `APIView` as the easier way to describe logic to make API endpoints.
+
+An APIView allow to define HTTP standard methods for functions. The basic methods are.
+
+ - GET: Get one or more items
+ - POST: Create an item
+ - PUT:  Update an item
+ - PATCH: Partially update an item
+ - DELETE: Delete an item
+
+ APIviews give us most control over the logic. Its perfect to implement complex logic as calling  other API's and controlling files.
+
+ We can use APIViews as we prefer based on our experience. It's recommended to use when we need full control over the logic, and required to process files and rendering a syncronous response. Also when you need to call other API's or services and access to local files or data.
+
+## Create my first APIview
+You can check the model [here](profiles_api/views.py).
+
+ To create an APIView, we need to update the views file and import `APIView` form `rest_framework.views` and `Response` from `rest_framework.response`.
+
+ The class will be inherit from `APIView`. In the new class, we define the allowed functions (get, post, etc). Remember to require `self` and `request` on the functions. Also it's best practice to define a format, although it could be None.
+
+ The function returns a Response object with a dict with the values than front end requires.
+
+ ## Confugure URL views
+ Check general url's [here](profiles_project/urls.py) and app url [here](profiles_project/api.py).
+
+On URL project we can import all the URLs of the api inserting other element on the urlpatterns list. For this, we need to add a `path` and an `include` (import from `django url`). The element is and include object with the required parameters.
+ - Prefix assigned to app
+ - include object the the url file of the app (app.urls)
+
+On URL app we need to import path (`django_urls`) and the app's views. The we create a particular list called urlpatterns. It will have a path object with
+ - Name of page
+ - View function of the page
+
+You will access to the funtions inserting 
+
+> HOST/PREFIX_APP/VIEW_PAGE
+
+## Serializers
+You can check serializers [here](profiles_api/serializers.py).  Also, you can check post function [here](profiles_api/views.py).
+
+It allows to convert input values to Python objects and viceversa.
+
+It requires from `rest_framework` the class `serializers`. New serializer classes with inherit from `serializers.Serializer`.
+
+The new class with have name of fields (like Django forms) using serializers instead of forms.
+
+To use it on a View, we need to declare it as an attribute of our view class as `serializer_class`.
+
+The function which use it, we need to use an object using `serializer_class` inserting the parameter `data=rquest.data`. It convert the data request to serializer object with the data on the request.
+
+The best practice it work with a serializer with valid values. So we can use `is_valid()` function to works only if the serializers values are valid. Also, we can get the serializer valid values using `serializer.validated_data.get()`.
+
+
+## Status
+
+Status object allows to notify user the result of the action (404 NOT FOUND, 200 OK). It cames on `status` from `rest_framework`.
+
+You can add an error on Response object on the return inserting as a parameter `serializer.error, status = status.HTTP_400_BAD_REQUEST` (you can find status [here](https://www.django-rest-framework.org/api-guide/status-codes/))
+
+If a function drops this error, it will mark the field and the error committed.
+
