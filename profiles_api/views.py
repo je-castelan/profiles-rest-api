@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from profiles_api import serializers
 from rest_framework import status
 
+from rest_framework import viewsets 
+
+
 class HelloApiView(APIView):
     """First API View"""
     serializer_class = serializers.HelloSerializer
@@ -29,3 +32,30 @@ class HelloApiView(APIView):
             return Response({'message': message})
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk=None):
+        """Testing PUT function"""
+        return Response({'method': 'PUT'})
+
+    def patch(self, request, pk=None):
+        """Testing PATCH function"""
+        return Response({'method': 'PATCH'})
+
+    def delete(self, request, pk=None):
+        """Testing DELETE function"""
+        return Response({'method': 'DELETE'})
+
+
+class HelloViewSet(viewsets.ViewSet):
+    """Test API ViewSet"""
+
+    def list(self, request):
+        """Return a hello message with GET function"""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps to URLS using Routers',
+            'Provides more functionality with less code',
+        ]
+
+        return Response({'message': 'Hello!', 'a_viewset': a_viewset})

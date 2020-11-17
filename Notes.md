@@ -144,7 +144,7 @@ An APIView allow to define HTTP standard methods for functions. The basic method
  We can use APIViews as we prefer based on our experience. It's recommended to use when we need full control over the logic, and required to process files and rendering a syncronous response. Also when you need to call other API's or services and access to local files or data.
 
 ## Create my first APIview
-You can check the model [here](profiles_api/views.py).
+You can check the view [here](profiles_api/views.py).
 
  To create an APIView, we need to update the views file and import `APIView` form `rest_framework.views` and `Response` from `rest_framework.response`.
 
@@ -152,7 +152,7 @@ You can check the model [here](profiles_api/views.py).
 
  The function returns a Response object with a dict with the values than front end requires.
 
- ## Confugure URL views
+ ## Configure URL views
  Check general url's [here](profiles_project/urls.py) and app url [here](profiles_project/api.py).
 
 On URL project we can import all the URLs of the api inserting other element on the urlpatterns list. For this, we need to add a `path` and an `include` (import from `django url`). The element is and include object with the required parameters.
@@ -161,7 +161,7 @@ On URL project we can import all the URLs of the api inserting other element on 
 
 On URL app we need to import path (`django_urls`) and the app's views. The we create a particular list called urlpatterns. It will have a path object with
  - Name of page
- - View function of the page
+ - View function of the page with the funcion `as_view()`
 
 You will access to the funtions inserting 
 
@@ -191,3 +191,47 @@ You can add an error on Response object on the return inserting as a parameter `
 
 If a function drops this error, it will mark the field and the error committed.
 
+# ViewSet
+
+## Introduction
+
+It manage the THHP actions with the following functions:
+
+ - List: As GET
+ - Create: As POST
+ - Retrieve: Getting a specific object (GET)
+ - Update: like PUT
+ - Partial_update: Like PATCH
+ - Destroy: Like DELETE
+
+ Viewsets takes care of a lot of typical logic for you because it has precharged standard database operations. It allows to have a fastest way to make a database interface.
+
+ It recomends to use ViewSet in case to create a simple CRUD, a simple API or make a not complex logic. It works with standard data structures
+
+ ## Create first ViewSet
+ You can check the view [here](profiles_api/views.py).
+
+It requires to import `viewsets` from `rest_framework`. New class must inherit from `viewsets.ViewSet`.
+
+## URL Router
+Check general url's [here](profiles_api/urls.py)
+
+To point a ViewSet with URL, we need to create a Router.
+
+On urls file, we need to import `DefaultRouter` from `rest_framework.routers`.
+
+We need to create an object from DefaultRouter and execute the function `register` with the following parameters
+
+ - Prefix of the APIView assigned
+ - ViewSet class created on views
+ - Base name to know it on web pages
+
+ On urlpatterns object, we need to add a path with the following elements:
+  - Black first for prefix (we assigned on the defaultrouter)
+  - Include object pointing to attribute `urls` to the router object
+
+Viewset is accesible with the following path
+
+> URL_SERVER/api/APIVIEW_PREFIX
+
+URL's on a app take priority to ViewSet (it's probably than you doesn't find at first look the APIView)
