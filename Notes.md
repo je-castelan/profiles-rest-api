@@ -235,3 +235,11 @@ Viewset is accesible with the following path
 > URL_SERVER/api/APIVIEW_PREFIX
 
 URL's on a app take priority to ViewSet (it's probably than you doesn't find at first look the APIView)
+
+## Serializers
+
+We still using serializers to validate values declaring the class used as class attibute `serializer_class`. On the functions, we associate values with ` self.serializer_class(data=request.data)`
+
+## Testing
+
+In order to test, we need to set at the final of the URL any value than represents the object id to PUT, PATCH or DELETE.
