@@ -243,3 +243,34 @@ We still using serializers to validate values declaring the class used as class 
 ## Testing
 
 In order to test, we need to set at the final of the URL any value than represents the object id to PUT, PATCH or DELETE.
+
+# Profiles API
+
+## Model Serializer
+We use it in cse to validate values for a model object. This is a class inherited from `serializers.ModelSerializer`.
+
+To initialize this class, we need to create an internal class called `Meta`. Into this subclass we can define the following:
+ - `model` = The model connected to this serializer.
+ - `fields` =  field to manage on the serializer on the model. It's neecesary to declare it in a list
+ - `extra_kwags` = A dictionary which we can adjust caracteristics to the fields on the serializer. For example, it a field is read only and if it is neccesary to use a kind of input type on the browsable api to charge it.
+
+```
+extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'style': {'input_type': 'password'}
+            }
+        }
+```
+
+We can overrde `create` function in order to do extra actions (in the case of user model, we need to adjust the password as a hash and use the "create user" function which encript it). When we configure this function, it is neccesary to use the validated values (example `field = validated_data['field']`)
+
+## ModelViewSet
+
+It works like ViewSet but works indicating a model to work (and indicting a specific query to manage the objects).
+
+It must be inherit from `viewsets.ModelViewSet` and we can configurate the following attributes:
+ - serializer_class which validates the information
+ - queryset to manage required objects.
+
+Remember to connect it with a router to url files. When we test it, we can use the GET, POST, PUT, PATCH nad DELETE options
