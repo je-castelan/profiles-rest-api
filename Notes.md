@@ -274,3 +274,31 @@ It must be inherit from `viewsets.ModelViewSet` and we can configurate the follo
  - queryset to manage required objects.
 
 Remember to connect it with a router to url files. When we test it, we can use the GET, POST, PUT, PATCH nad DELETE options
+
+## Permissions
+You can check the view [here](profiles_api/permissions.py).
+
+We ned to import `permissions` from `rest_framework`. The permission class must inherit from `permissions.BasePermission`.
+
+To manage permissions to execute a HTTP method, we need to create the function `has_object_permission(self, request, view, obj)`.
+
+In the next example, the permission class will check than the owner user is making the method. If not, it can only execute safeful methods (like GET).
+
+```
+class UpdateOwnProfile(permissions.BasePermission):
+    """Allow users to edit their own profile"""
+
+    def has_object_permission(self, request, view, obj):
+        """Check user is trying to edit their own profile"""
+        # If method is safeful (GET)
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # If not safeful, it must check if the method is executed by the same user.
+        return obj.id == request.user.id
+```
+
+To assign this permission class, we need to assign the attibute `permission_classes` on the ViewSet. This attribute must be a tuple (example: `permission_classes = (permissions.UpdateOwnProfile,)`)
+
+## Tokens
+
+In case than you are using permission class to check authenticated users, you will need the token authentication method than Django is usign. So, on the view set you must assign the attribute `authentication_classes` with a tuple which contains the class `TokenAuthentication` (for example: `authentication_classes = (TokenAuthentication,)`). This class is imported from `rest_framework.authentication`.
