@@ -302,3 +302,32 @@ To assign this permission class, we need to assign the attibute `permission_clas
 ## Tokens
 
 In case than you are using permission class to check authenticated users, you will need the token authentication method than Django is usign. So, on the view set you must assign the attribute `authentication_classes` with a tuple which contains the class `TokenAuthentication` (for example: `authentication_classes = (TokenAuthentication,)`). This class is imported from `rest_framework.authentication`.
+
+## Searching
+
+You can assign other fields (apart of id) to search registers on the viewset.
+
+ - It required to import `filter` from `rest_framework`
+ - On viewset, we need to assign the attribute `filter_backends` with a tuple which must contain the value `filters.SearchFilter`
+ - On viewset also we need to assign the attribute `search_fields` with a tuple which will have the search fields (example `search_fields = ('name', 'email',)`)
+
+
+ You could execute GET requirements with the following sintaxis to execute search.
+
+> SERVER:PORT/APP_PREFIX/VIEWSET_PREFIX/?search=value
+
+# Login
+
+## Login API Viewset
+We can create a Viewset to manage the login API page.
+In this case, we can use default resources to manage the login with tokens. For this, we need to import `ObtainAuthToken` from `rest_framework.authtoken.views`.
+We need to create a new class which inherit from `ObtainAuthToken`. It must have the attibute `renderer_classes` equals to `api_settings.DEFAULT_RENDERER_CLASSES` (it's neccesary to import `api_settings` from `rest_framework.settings`).
+
+Finally, it's neccesary to add on the url.py file the viwset on the router object.
+
+It's neccesary to access login page as POST method. When you ingress your email and password, POST method will return a JSPON with a token value. This token refers the user which logged on future requirements. It must be assigned on the HTTP request.
+
+## Using ModHeader extension
+
+To add the token on HTTP request, we can open ModHeader and add the following parameter:
+ - Authentication. The value is "Token x" . x is the token obtained on login.
