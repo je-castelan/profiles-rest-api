@@ -331,3 +331,14 @@ It's neccesary to access login page as POST method. When you ingress your email 
 
 To add the token on HTTP request, we can open ModHeader and add the following parameter:
  - Authentication. The value is "Token x" . x is the token obtained on login.
+
+
+# Miscelaneous
+
+## Using user model in other classes
+
+When you want to use the user model in other classes (example: foreign key), it is best practice to point to the `AUTH_USER_MODEL` variable on settings.py file (`import django.conf import settings`)
+
+## Perform create, update and delete
+
+It's possible than a viewset, you need to make any aditiona action before to create, update and delete. On the view set, you can override the functions `perform_create`, `perform_update` and `perform_delete`. If you want more detail, you can check it [here](https://www.django-rest-framework.org/api-guide/generic-views/).

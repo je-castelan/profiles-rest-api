@@ -20,8 +20,21 @@
 
  ## Delete profile
 
+ ## Create new feed items
+ - Logged in user only
+
+ # Updating feed items
+ - Logged in user only
+
+ # Delete feed items
+ - Logged in user only
+
+#Viewing other profile status updates
+- About all users
 
 # API URL's
 
 /api/profile/ -> List and create
 /api/profile/<profile_id> -> get, update, remove
+/api/feed/ -> LIST/GET/POST
+/api/feed/<feed_item_id> -> GET/PUT/PATCH/DELETE
