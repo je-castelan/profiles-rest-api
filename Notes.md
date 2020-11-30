@@ -342,3 +342,10 @@ When you want to use the user model in other classes (example: foreign key), it 
 ## Perform create, update and delete
 
 It's possible than a viewset, you need to make any aditiona action before to create, update and delete. On the view set, you can override the functions `perform_create`, `perform_update` and `perform_delete`. If you want more detail, you can check it [here](https://www.django-rest-framework.org/api-guide/generic-views/).
+
+## IsAuthenticatedOrReadOnly y IsAuthenticated
+
+Ambas clases se importan de `rest_framework.permissions`. 
+
+ - `IsAuthenticatedOrReadOnly`: Esta clase de permiso define si hay un usuario autenticado, o sino, pone el viewset en solo lectura
+ - `IsAuthenticated`: Esta solo permite visualizar el viewset si estás autenticado.
