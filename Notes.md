@@ -345,7 +345,45 @@ It's possible than a viewset, you need to make any aditiona action before to cre
 
 ## IsAuthenticatedOrReadOnly y IsAuthenticated
 
-Ambas clases se importan de `rest_framework.permissions`. 
+Both classes are imported from `rest_framework.permissions`. 
 
- - `IsAuthenticatedOrReadOnly`: Esta clase de permiso define si hay un usuario autenticado, o sino, pone el viewset en solo lectura
- - `IsAuthenticated`: Esta solo permite visualizar el viewset si estás autenticado.
+ - `IsAuthenticatedOrReadOnly`: This class define if there is a logged user. Otherwise, it will show the APIVies as readonly.
+ - `IsAuthenticated`: This class define if there is a logged user. Otherwise, it will not show the APIView
+
+ # Deploy on AWS
+
+We can upload our API on a AWS Free Tier [here](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc).
+ 
+## Public key
+
+We upload the content of the ssh public key (`cat ~/.ssh/id_rsa.pub`) on the section Sevices -> Compute/EC2. Then search Network & Security / Key Pairs.
+
+We will select the "Import key pair" action and paste the public key.
+
+## EC2 server instance
+
+On the section Sevices -> Compute/EC2, then select `Launch instance`.
+
+In order to follow the Ubuntu version, we need to search `Ubuntu Server 18.04 LTS (HVM), SSD Volume Type` instance and check than it works as `Free tier eligible`.
+
+Then, oninstance type, we need to check which type is `free tier elegble`.
+
+On Configure Instance Details steps, we look on `6: Configure Security Group` to add http service.
+
+When we launch the server, check your own key pair 
+
+## Scripts and changes required
+
+On [this folder](deploy) we will find the following information.
+
+ - `setup.sh`: Script to install all the required dependences for the project. We need to insert the project's github ssh location.
+ - `supervisor_profiles_api.conf`: Supervisor controller with environment variables.
+ - `nginx_profiles_api.conf`: NGINX configuration to serve static files.
+ - `update.sh`: Check any new change on github and reload it
+
+Scripts must change the priviledges with `chmod +x deploy/*sh`
+
+On `settings.py` :
+
+ - Change DEBUG to False. Due than `supervisor_profiles_api.conf` has debug variable as false, we can set `DEBUG = bool(int(os.environ.get('DEBUG', 1)))
+ - STATIC_ROOT = `static/`
