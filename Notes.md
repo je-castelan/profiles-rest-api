@@ -376,7 +376,7 @@ When we launch the server, check your own key pair
 
 On [this folder](deploy) we will find the following information.
 
- - `setup.sh`: Script to install all the required dependences for the project. We need to insert the project's github ssh location.
+ - `setup.sh`: Script to install all the required dependences for the project. We need to insert the project's github https location.
  - `supervisor_profiles_api.conf`: Supervisor controller with environment variables.
  - `nginx_profiles_api.conf`: NGINX configuration to serve static files.
  - `update.sh`: Check any new change on github and reload it
@@ -387,6 +387,7 @@ On `settings.py` :
 
  - Change DEBUG to False. Due than `supervisor_profiles_api.conf` has debug variable as false, we can set `DEBUG = bool(int(os.environ.get('DEBUG', 1)))
  - STATIC_ROOT = `static/`
+ - ALLOWED_HOSTS = ['[Public IPV4 DNS]','127.0.0.1']
 
 ## Deployment
 
