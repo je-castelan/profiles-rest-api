@@ -387,3 +387,9 @@ On `settings.py` :
 
  - Change DEBUG to False. Due than `supervisor_profiles_api.conf` has debug variable as false, we can set `DEBUG = bool(int(os.environ.get('DEBUG', 1)))
  - STATIC_ROOT = `static/`
+
+## Deployment
+
+On the section Sevices -> Compute/EC2, then select `Running instances`. Then, select the server and get the `Public IPv4 DNS` URL and access it from your allowed PC via ssh with `ubuntu` user.
+
+Then, execute `curl -sL [setup.sh file on github url] | sudo bash -`
