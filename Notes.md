@@ -394,3 +394,11 @@ On `settings.py` :
 On the section Sevices -> Compute/EC2, then select `Running instances`. Then, select the server and get the `Public IPv4 DNS` URL and access it from your allowed PC via ssh with `ubuntu` user.
 
 Then, execute `curl -sL [setup.sh file on github url] | sudo bash -`
+
+## Updating app
+
+On `/usr/local/apps/profiles-rest-api` folder, you must run `sudo sh deploy/update.sh`
+
+## Manage on production
+
+Command on manage.py must be run as `sudo env/bin/python manage.py [command]`

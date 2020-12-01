@@ -7,4 +7,6 @@ Using the [Build a Backend REST API with Python & Django - Beginner](https://www
 
 You can see the notes about this course [here](Notes.md).
 
-Also, you can look the project scope on this course [here](Scope.md)
+Also, you can look the project scope on this course [here](Scope.md).
+
+You can fin my final api on AWS server [here](http://ec2-18-220-227-177.us-east-2.compute.amazonaws.com/first_api/).
